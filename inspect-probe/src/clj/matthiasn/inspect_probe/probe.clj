@@ -2,7 +2,7 @@
   (:gen-class)
   (:require
     [matthiasn.systems-toolbox.component :as comp]
-    [fipp.clojure :as fipp]
+    [clj-time.core :as t]
     [matthiasn.inspect-probe.kafka-producer :as kp]))
 
 (defonce kafka-producer (comp/make-component (kp/cmp-map :probe/kafka-prod-cmp)))
@@ -16,15 +16,15 @@
       [& args]
       (let [ts# (System/currentTimeMillis)
             res# (apply f args)]
-        (future
-          (comp/send-msg kafka-producer
-                         [:inspect/probe
-                          {:namespace    namespace-name
-                           :fn-name      fn-name#
-                           :args         (with-out-str (fipp/pprint args))
-                           :return-value (with-out-str (fipp/pprint res#))
-                           :ts           ts#
-                           :duration     (- (System/currentTimeMillis) ts#)}]))
+        (comp/send-msg kafka-producer
+                       [:inspect/probe
+                        {:namespace    namespace-name
+                         :fn-name      fn-name#
+                         :args         args
+                         :return-value res#
+                         :ts           ts#
+                         :datetime     (t/now)
+                         :duration     (- (System/currentTimeMillis) ts#)}])
         res#))))
 
 (def ^{:private true :dynamic true}
