@@ -5,7 +5,7 @@
     [clojure.core :as core]
     [clj-time.core :as t]
     [matthiasn.systems-toolbox.component :as comp]
-    [matthiasn.systems-toolbox.kafka-producer :as kp]
+    [matthiasn.systems-toolbox-kafka.kafka-producer :as kp]
     [net.cgrand.seqexp :as se]))
 
 (def cfg {:msg-type-topic-mapping {:inspect/probe "inspect-probe-events"}})

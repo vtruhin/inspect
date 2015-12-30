@@ -11,7 +11,7 @@
     [clojure.core.async :refer [<! chan put! mult tap pub sub timeout go-loop sliding-buffer]]
     [clojure.tools.logging :as log]
     [matthiasn.systems-toolbox.switchboard :as sb]
-    [matthiasn.systems-toolbox.kafka-consumer :as kc]))
+    [matthiasn.systems-toolbox-kafka.kafka-consumer :as kc]))
 
 ;; in-chan is multiplied into event-mult. That way, the matcher component can attach on start and detach on stop.
 ;; With no channel tapped into the data, the messages are simply dropped.
